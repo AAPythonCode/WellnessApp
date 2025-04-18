@@ -20,7 +20,7 @@ struct ContentView: View {
                 .resizable()
                 .foregroundColor(.white)
                 .frame(
-                    width: 100,
+                    width: 120,
                     height: 100
                 )
                 .scaledToFill()
