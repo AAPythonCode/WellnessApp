@@ -11,7 +11,7 @@ import SwiftUI
 struct WellnessApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(email: "")
         }
     }
 }
