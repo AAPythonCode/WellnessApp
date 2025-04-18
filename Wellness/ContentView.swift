@@ -58,7 +58,7 @@ struct ContentView: View {
             .background(.blue)
             .cornerRadius(32)
             Button(action: signIn) {
-                Label("... or sign up", systemImage: "none")
+                Label("...or sign up", systemImage: "none")
             }
             .offset(y: 22)
             .offset(x: -9)
