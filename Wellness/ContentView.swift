@@ -1,9 +1,4 @@
-//
-//  ContentView.swift
-//  Wellness
-//
-//  Created by Aarnav Dhir on 4/17/25.
-//
+
 
 import SwiftUI
 
