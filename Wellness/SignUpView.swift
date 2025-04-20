@@ -12,9 +12,9 @@ struct SignUpView: View {
     
     var isFormValid: Bool {
         return !email.isEmpty &&
-               password.count > 3 &&
-               password.count <= 20 &&
-               password == reenter
+        password.count > 3 &&
+        password.count <= 20 &&
+        password == reenter
     }
     var body: some View {
         VStack {
@@ -49,8 +49,8 @@ struct SignUpView: View {
                 .font(Font.custom(
                     "Gill Sans Light", size: 27
                 ))
-                .foregroundStyle(.green)
-
+                .foregroundStyle(.white)
+            
             TextField("Enter email", text: $email)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
@@ -76,40 +76,46 @@ struct SignUpView: View {
                 .font(Font.custom(
                     "Gill Sans Light", size: 27
                 ))
-
+            
             validationMessage()
-            Button(action: signInWithGoogle) {
-                Image("Google")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 50)
-                    .padding()
-            }
-            .background(.white)
-            .cornerRadius(32)
-            .shadow(radius: 32)
+            
             Button(action: signUp) {
                 Label("Sign Up", systemImage: "arrow.up")
             }
             .padding()
-            .foregroundStyle(.blue)
-            .background(isFormValid ? Color.green : Color.gray)
+            .foregroundStyle(.white)
+            .background(isFormValid ? Color.black : Color.gray)
             .cornerRadius(32)
             .disabled(!isFormValid)
-
+            
+            
+            .background(.white)
+            .cornerRadius(32)
+            .shadow(radius: 32)
             if !signUpErrorMessage.isEmpty {
                 Text(signUpErrorMessage)
                     .font(Font.custom("Gill Sans Light", size: 20))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.white)
             }
             Button(action: logInBack) {
-                Label("...or log in", systemImage: "none")
+                Label {
+                    Text("Sign in with Google")
+                        .font(Font.custom("Gill Sans Light", size: 20))
+                } icon: {
+                    Image("Google")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                }
             }
-            .foregroundColor(.green)
+            .foregroundStyle(.white)
         }
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.blue)
+        .background(
+            Image("coder")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 2010, height: 950)
+        )
     }
     
     @ViewBuilder
@@ -117,21 +123,21 @@ struct SignUpView: View {
         if password.count < 1 {
             Text("Please enter a password.")
                 .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.green)
+                .foregroundStyle(.white)
         } else if password.count <= 3 {
             Text("Password should be more than 6 characters.")
                 .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.green)
+                .foregroundStyle(.white)
         } else if password.count > 20 {
             Text("Password should be less than 20 characters.")
                 .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.green)
+                .foregroundStyle(.white)
         } else if reenter != password {
             Text("Passwords do not match.")
                 .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.green)
+                .foregroundStyle(.white)
         }
-
+        
     }
     
     func logInBack() {
@@ -149,44 +155,8 @@ struct SignUpView: View {
                 self.logIn.toggle()
             }
         }
-    }
-    
-    func signInWithGoogle() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
-        let config = GIDConfiguration(clientID: clientID)
-        guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else {
-            print("No root view controller")
-            return
-        }
-
-        GIDSignIn.sharedInstance.configuration = config
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
-            if let error = error {
-                signUpErrorMessage = "Google Sign-In Error: \(error.localizedDescription)"
-                return
-            }
-
-            guard let user = result?.user,
-                  let idToken = user.idToken?.tokenString else {
-                signUpErrorMessage = "Google Sign-In failed to retrieve tokens."
-                return
-            }
-            let accessToken = user.accessToken.tokenString
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    signUpErrorMessage = "Firebase Auth Error: \(error.localizedDescription)"
-                } else {
-                    print("Signed in with Google: \(authResult?.user.email ?? "unknown email")")
-                    self.logIn.toggle()
-                }
-            }
+        #Preview {
+            SignUpView(email: "", password: "", reenter: "", logIn: .constant(false))
         }
     }
-}
-
-#Preview {
-    SignUpView(email: "", password: "", reenter: "", logIn: .constant(false))
 }
