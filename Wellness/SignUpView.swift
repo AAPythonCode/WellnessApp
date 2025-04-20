@@ -77,7 +77,7 @@ struct SignUpView: View {
             }
             .background(.white)
             .cornerRadius(32)
-            .shadow(radius: 5)
+            .shadow(radius: 32)
             Button(action: signUp) {
                 Label("Sign Up", systemImage: "arrow.up")
             }
