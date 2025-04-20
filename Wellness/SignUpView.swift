@@ -18,15 +18,13 @@ struct SignUpView: View {
     }
     var body: some View {
         VStack {
-            Text("Bit by Bit")
-                .font(.largeTitle)
-                .fontWeight(.black)
+            Text("Bit By Bit")
+                .font(Font.custom("Gill Sans Light", size: 50))
                 .multilineTextAlignment(.center)
                 .bold()
-                .foregroundColor(.white)
-                .font(Font.custom(
-                    "Gill Sans", size: 27
-                ))
+                .foregroundStyle(.white)
+                .padding()
+                .offset(y: -30)
             Text("Get started with your ultimate coding journey! Let's. Get. Started. ")
                 .font(.title2)
                 .fontWeight(.black)
@@ -36,6 +34,7 @@ struct SignUpView: View {
                 .font(Font.custom(
                     "Gill Sans", size: 27
                 ))
+                .bold()
             
             Image(systemName: "")
                 .resizable()
@@ -98,16 +97,13 @@ struct SignUpView: View {
                     .foregroundStyle(.white)
             }
             Button(action: logInBack) {
-                Label {
-                    Text("Sign in with Google")
-                        .font(Font.custom("Gill Sans Light", size: 20))
-                } icon: {
-                    Image("Google")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                }
+                Text("return to login")
+                    .font(Font.custom("Gill Sans Light", size: 27))
             }
             .foregroundStyle(.white)
+            .offset(y: 80)
+            .offset(x: 0)
+
         }
         .padding()
         .background(
