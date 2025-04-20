@@ -27,7 +27,7 @@ struct SignUpView: View {
                 .font(Font.custom(
                     "Gill Sans", size: 27
                 ))
-            Text("Get started with your ultimate coding journey! ")
+            Text("Get started with your ultimate coding journey! Let's Get Started! ")
                 .font(.title2)
                 .fontWeight(.black)
                 .multilineTextAlignment(.center)
