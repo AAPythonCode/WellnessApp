@@ -18,7 +18,7 @@ struct SignUpView: View {
     }
     var body: some View {
         VStack {
-            Text("Welcome to the Wellness App")
+            Text("Bit by Bit")
                 .font(.largeTitle)
                 .fontWeight(.black)
                 .multilineTextAlignment(.center)
@@ -27,7 +27,17 @@ struct SignUpView: View {
                 .font(Font.custom(
                     "Gill Sans", size: 27
                 ))
-            Image(systemName: "suit.heart.fill")
+            Text("Get started with your ultimate coding journey! ")
+                .font(.title2)
+                .fontWeight(.black)
+                .multilineTextAlignment(.center)
+                .bold()
+                .foregroundColor(.white)
+                .font(Font.custom(
+                    "Gill Sans", size: 27
+                ))
+            
+            Image(systemName: "")
                 .resizable()
                 .foregroundColor(.white)
                 .frame(
