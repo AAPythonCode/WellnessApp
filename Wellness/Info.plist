@@ -17,12 +17,19 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-703974388983-ios-afb39f0d24636fcd538ff2
-</string>
+				<string>app-1-703974388983-ios-afb39f0d24636fcd538ff2</string>
 			</array>
 		</dict>
 	</array>
 	<key>GIDClientID</key>
 	<string>703974388983-l034fdr36n937lol27g91t5aq9dvqqhs.apps.googleusercontent.com</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>github</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GmarketSansLight.otf</string>
+	</array>
 </dict>
 </plist>

@@ -25,7 +25,7 @@ struct SignUpView: View {
                 .foregroundStyle(.white)
                 .padding()
                 .offset(y: -30)
-            Text("Get started with your ultimate coding journey! Let's. Get. Started. ")
+            Text("Join a community for coders all around the world!")
                 .font(.title2)
                 .fontWeight(.black)
                 .multilineTextAlignment(.center)

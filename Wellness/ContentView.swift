@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var resetEmail: String = ""
     @State private var isLoggedIn: Bool = false
     @State private var loginError: String = ""
+    @State private var githubSignInError: String = ""
     
     var body: some View {
         VStack {
@@ -106,7 +107,7 @@ struct ContentView: View {
                         .frame(width: 50, height: 50)
                 }
             }
-            Button(action: signInWithGithub) {
+            Button(action: signInWithGIthub) {
                 Label {
                     Text("Sign in with Github")
                         .font(Font.custom("Gill Sans Light", size: 20))
@@ -140,6 +141,13 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $isLoggedIn) {
             Dashboard(isLoggedIn: .constant(false))
+        }
+        .alert("GitHub Sign-In Error", isPresented: .constant(!githubSignInError.isEmpty)) {
+            Button("OK", role: .cancel) {
+                githubSignInError = ""
+            }
+        } message: {
+            Text(githubSignInError)
         }
     }
     
@@ -181,7 +189,7 @@ struct ContentView: View {
             
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
-                    signUpErrorMessage = "Firebase Auth Error: \(error.localizedDescription)"
+                    signUpErrorMessage = "\(error.localizedDescription)"
                 } else {
                     print("Signed in with Google: \(authResult?.user.email ?? "unknown email")")
                     self.logIn.toggle()
@@ -189,39 +197,43 @@ struct ContentView: View {
             }
         }
     }
-    
-    func signInWithGithub() {
-        let provider = OAuthProvider(providerID: "github.com")
-        provider.scopes = ["user:email"]
+    func signInWithGIthub() {
+        var provider = OAuthProvider(providerID: "github.com")
         provider.customParameters = [
-            "allow_signup": "false"
+          "allow_signup": "false"
         ]
-
+        // Request read access to a user's email addresses.
+        // This must be preconfigured in the app's API permissions.
+        provider.scopes = ["user:email"]
         provider.getCredentialWith(nil) { credential, error in
-            if let error = error {
-                print("GitHub credential error: \(error.localizedDescription)")
-                return
-            }
-            guard let credential = credential else {
-                print("GitHub credential is nil.")
-                return
-            }
+          if error != nil {
+            // Handle error.
+          }
+          if credential != nil {
+              Auth.auth().signIn(with: credential!) { authResult, error in
+              if error != nil {
+                // Handle error.
+              }
+              // User is signed in.
+              // IdP data available in authResult.additionalUserInfo.profile.
 
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    print("GitHub sign-in error: \(error.localizedDescription)")
-                    return
-                }
-                guard let authResult = authResult else {
-                    print("Auth result is nil.")
-                    return
-                }
-                print("Signed in with GitHub: \(authResult.user.email ?? "unknown email")")
-                isLoggedIn = true
+                  guard let authResult = authResult else {
+                      print("Auth result is nil.")
+                      return
+                  }
+                  guard let oauthCredential = authResult.credential else {
+                      print("Could not cast credential as OAuthCredential.")
+                      return
+                  }
+              // GitHub OAuth access token can also be retrieved by:
+              // oauthCredential.accessToken
+              // GitHub OAuth ID token can be retrieved by calling:
+              // oauthCredential.idToken
             }
+          }
         }
+        
     }
-    
     func resetPassword() {
         Auth.auth().sendPasswordReset(withEmail: resetEmail) { error in
             if let error = error {
@@ -232,6 +244,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView(email: "", password: "")

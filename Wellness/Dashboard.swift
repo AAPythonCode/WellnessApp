@@ -9,14 +9,20 @@ import SwiftUI
 
 struct Dashboard: View {
     @Binding var isLoggedIn: Bool
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .onTapGesture {
-                self.isLoggedIn.toggle()
+        HStack {
+            Button("Logout") {
+                isLoggedIn = false
             }
+        }
+        .padding()
     }
 }
 
 #Preview {
     Dashboard(isLoggedIn: .constant(false))
+}
+func LogIn() {
+    
 }
