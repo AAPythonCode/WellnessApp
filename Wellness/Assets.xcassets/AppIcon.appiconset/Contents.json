@@ -1,31 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "lotus.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "lotus 1.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
-      "filename" : "lotus 2.png",
+      "filename" : "cursorIconV2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
