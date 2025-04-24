@@ -32,6 +32,8 @@ struct JoinScreen: View {
  
     }
 }
+
+// fancy button struct
 struct ButtonView: View {
     let label: String
     let icon: String?
