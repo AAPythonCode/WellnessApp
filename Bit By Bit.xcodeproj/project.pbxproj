@@ -12,6 +12,7 @@
 		3A18B3002DB4278B0080A147 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B2FF2DB4278B0080A147 /* FirebaseFirestore */; };
 		3A18B3032DB444510080A147 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B3022DB444510080A147 /* GoogleSignIn */; };
 		3A18B3052DB444510080A147 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B3042DB444510080A147 /* GoogleSignInSwift */; };
+		3A8466102DB9DF7300DE012C /* launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A84660F2DB9DF7300DE012C /* launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,18 +33,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3AF420E42DB1B20500E22D0D /* Wellness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wellness.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AF420F12DB1B20800E22D0D /* WellnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WellnessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AF420FB2DB1B20800E22D0D /* WellnessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WellnessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A84660F2DB9DF7300DE012C /* launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = launch.storyboard; sourceTree = "<group>"; };
+		3AF420E42DB1B20500E22D0D /* Bit By Bit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bit By Bit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AF420F12DB1B20800E22D0D /* Bit By BitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bit By BitTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AF420FB2DB1B20800E22D0D /* Bit By BitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bit By BitUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Wellness" target */ = {
+		3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Bit By Bit" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 3AF420E32DB1B20500E22D0D /* Wellness */;
+			target = 3AF420E32DB1B20500E22D0D /* Bit By Bit */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -51,7 +53,7 @@
 		3AF420E62DB1B20500E22D0D /* Wellness */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Wellness" target */,
+				3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Bit By Bit" target */,
 			);
 			path = Wellness;
 			sourceTree = "<group>";
@@ -105,15 +107,16 @@
 				3AF420F42DB1B20800E22D0D /* WellnessTests */,
 				3AF420FE2DB1B20800E22D0D /* WellnessUITests */,
 				3AF420E52DB1B20500E22D0D /* Products */,
+				3A84660F2DB9DF7300DE012C /* launch.storyboard */,
 			);
 			sourceTree = "<group>";
 		};
 		3AF420E52DB1B20500E22D0D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3AF420E42DB1B20500E22D0D /* Wellness.app */,
-				3AF420F12DB1B20800E22D0D /* WellnessTests.xctest */,
-				3AF420FB2DB1B20800E22D0D /* WellnessUITests.xctest */,
+				3AF420E42DB1B20500E22D0D /* Bit By Bit.app */,
+				3AF420F12DB1B20800E22D0D /* Bit By BitTests.xctest */,
+				3AF420FB2DB1B20800E22D0D /* Bit By BitUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,9 +124,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3AF420E32DB1B20500E22D0D /* Wellness */ = {
+		3AF420E32DB1B20500E22D0D /* Bit By Bit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3AF421052DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Wellness" */;
+			buildConfigurationList = 3AF421052DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By Bit" */;
 			buildPhases = (
 				3AF420E02DB1B20500E22D0D /* Sources */,
 				3AF420E12DB1B20500E22D0D /* Frameworks */,
@@ -136,7 +139,7 @@
 			fileSystemSynchronizedGroups = (
 				3AF420E62DB1B20500E22D0D /* Wellness */,
 			);
-			name = Wellness;
+			name = "Bit By Bit";
 			packageProductDependencies = (
 				3A18B2FB2DB4048E0080A147 /* FirebaseAuth */,
 				3A18B2FD2DB4048E0080A147 /* FirebaseAuthCombine-Community */,
@@ -145,12 +148,12 @@
 				3A18B3042DB444510080A147 /* GoogleSignInSwift */,
 			);
 			productName = Wellness;
-			productReference = 3AF420E42DB1B20500E22D0D /* Wellness.app */;
+			productReference = 3AF420E42DB1B20500E22D0D /* Bit By Bit.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3AF420F02DB1B20800E22D0D /* WellnessTests */ = {
+		3AF420F02DB1B20800E22D0D /* Bit By BitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3AF421082DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "WellnessTests" */;
+			buildConfigurationList = 3AF421082DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By BitTests" */;
 			buildPhases = (
 				3AF420ED2DB1B20800E22D0D /* Sources */,
 				3AF420EE2DB1B20800E22D0D /* Frameworks */,
@@ -164,16 +167,16 @@
 			fileSystemSynchronizedGroups = (
 				3AF420F42DB1B20800E22D0D /* WellnessTests */,
 			);
-			name = WellnessTests;
+			name = "Bit By BitTests";
 			packageProductDependencies = (
 			);
 			productName = WellnessTests;
-			productReference = 3AF420F12DB1B20800E22D0D /* WellnessTests.xctest */;
+			productReference = 3AF420F12DB1B20800E22D0D /* Bit By BitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3AF420FA2DB1B20800E22D0D /* WellnessUITests */ = {
+		3AF420FA2DB1B20800E22D0D /* Bit By BitUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3AF4210B2DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "WellnessUITests" */;
+			buildConfigurationList = 3AF4210B2DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By BitUITests" */;
 			buildPhases = (
 				3AF420F72DB1B20800E22D0D /* Sources */,
 				3AF420F82DB1B20800E22D0D /* Frameworks */,
@@ -187,11 +190,11 @@
 			fileSystemSynchronizedGroups = (
 				3AF420FE2DB1B20800E22D0D /* WellnessUITests */,
 			);
-			name = WellnessUITests;
+			name = "Bit By BitUITests";
 			packageProductDependencies = (
 			);
 			productName = WellnessUITests;
-			productReference = 3AF420FB2DB1B20800E22D0D /* WellnessUITests.xctest */;
+			productReference = 3AF420FB2DB1B20800E22D0D /* Bit By BitUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -217,7 +220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3AF420DF2DB1B20500E22D0D /* Build configuration list for PBXProject "Wellness" */;
+			buildConfigurationList = 3AF420DF2DB1B20500E22D0D /* Build configuration list for PBXProject "Bit By Bit" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -235,9 +238,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3AF420E32DB1B20500E22D0D /* Wellness */,
-				3AF420F02DB1B20800E22D0D /* WellnessTests */,
-				3AF420FA2DB1B20800E22D0D /* WellnessUITests */,
+				3AF420E32DB1B20500E22D0D /* Bit By Bit */,
+				3AF420F02DB1B20800E22D0D /* Bit By BitTests */,
+				3AF420FA2DB1B20800E22D0D /* Bit By BitUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -247,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8466102DB9DF7300DE012C /* launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,12 +297,12 @@
 /* Begin PBXTargetDependency section */
 		3AF420F32DB1B20800E22D0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3AF420E32DB1B20500E22D0D /* Wellness */;
+			target = 3AF420E32DB1B20500E22D0D /* Bit By Bit */;
 			targetProxy = 3AF420F22DB1B20800E22D0D /* PBXContainerItemProxy */;
 		};
 		3AF420FD2DB1B20800E22D0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3AF420E32DB1B20500E22D0D /* Wellness */;
+			target = 3AF420E32DB1B20500E22D0D /* Bit By Bit */;
 			targetProxy = 3AF420FC2DB1B20800E22D0D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -430,6 +434,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WXZSN2D386;
@@ -439,7 +444,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = launch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -458,6 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WXZSN2D386;
@@ -467,7 +475,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = launch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -496,7 +506,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wellness.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Wellness";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bit By Bit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bit By Bit";
 			};
 			name = Debug;
 		};
@@ -515,7 +525,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wellness.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Wellness";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bit By Bit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bit By Bit";
 			};
 			name = Release;
 		};
@@ -556,7 +566,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3AF420DF2DB1B20500E22D0D /* Build configuration list for PBXProject "Wellness" */ = {
+		3AF420DF2DB1B20500E22D0D /* Build configuration list for PBXProject "Bit By Bit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3AF421032DB1B20800E22D0D /* Debug */,
@@ -565,7 +575,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3AF421052DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Wellness" */ = {
+		3AF421052DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By Bit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3AF421062DB1B20800E22D0D /* Debug */,
@@ -574,7 +584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3AF421082DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "WellnessTests" */ = {
+		3AF421082DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By BitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3AF421092DB1B20800E22D0D /* Debug */,
@@ -583,7 +593,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3AF4210B2DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "WellnessUITests" */ = {
+		3AF4210B2DB1B20800E22D0D /* Build configuration list for PBXNativeTarget "Bit By BitUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3AF4210C2DB1B20800E22D0D /* Debug */,

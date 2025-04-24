@@ -24,10 +24,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct WellnessApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var showLaunchScreen = true
+
     var body: some Scene {
         WindowGroup {
-            ContentView(email: "", password: "")
+            if showLaunchScreen {
+                LaunchView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            showLaunchScreen = false
+                        }
+                    }
+            } else {
+                JoinScreen()
+            }
         }
     }
 }
-

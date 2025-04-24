@@ -247,5 +247,5 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView(email: "", password: "")
+    JoinScreen()
 }

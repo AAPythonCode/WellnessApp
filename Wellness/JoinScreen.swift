@@ -1,36 +1,35 @@
-//
-//  JoinScreen.swift
-//  Wellness
-//
-//  Created by Aarnav Dhir on 4/23/25.
-//
-
 import SwiftUI
 
 struct JoinScreen: View {
     var body: some View {
+        Image("AppIcon")
+            .frame(maxWidth: .infinity)
+            .padding()
+            .scaledToFit()
         Text("The world's best way to learn a coding language, bit by bit.")
             .multilineTextAlignment(.center)
             .font(.custom("GmarketSansLight", size: 20))
         Button {
             // action
         } label: {
-            Text("Get Started")
+            Text("  Get Started                           ")
         }
         .foregroundStyle(.white)
         .font(.custom("GmarketSansLight", size: 20))
         .buttonStyle(.borderedProminent)
-        .offset(y: 320)
+        .offset(y: 300)
         
         
         Button {
             // action
         } label: {
-            Text("I already have an account")
+            Text(" I already have an account ")
         }
         .foregroundStyle(.black)
         .font(.custom("GmarketSansLight", size: 20))
-        .offset(y: 335)
+        .offset(y: 310)
+        .buttonStyle(.bordered)
+ 
     }
 }
 struct ButtonView: View {
@@ -59,6 +58,6 @@ struct ButtonView: View {
         
     }
 }
-#Preview("Join Screen") {
-    JoinScreen()
+#Preview {
+    ContentView(email: "", password: "")
 }
