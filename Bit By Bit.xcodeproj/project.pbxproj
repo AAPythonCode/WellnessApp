@@ -12,7 +12,6 @@
 		3A18B3002DB4278B0080A147 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B2FF2DB4278B0080A147 /* FirebaseFirestore */; };
 		3A18B3032DB444510080A147 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B3022DB444510080A147 /* GoogleSignIn */; };
 		3A18B3052DB444510080A147 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A18B3042DB444510080A147 /* GoogleSignInSwift */; };
-		3A8466102DB9DF7300DE012C /* launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A84660F2DB9DF7300DE012C /* launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,13 +32,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A84660F2DB9DF7300DE012C /* launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = launch.storyboard; sourceTree = "<group>"; };
 		3AF420E42DB1B20500E22D0D /* Bit By Bit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bit By Bit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AF420F12DB1B20800E22D0D /* Bit By BitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bit By BitTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AF420FB2DB1B20800E22D0D /* Bit By BitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bit By BitUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3A1C4BF42DBAE8FF006DC9B8 /* Exceptions for "Wellness" folder in "Bit By BitTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 3AF420F02DB1B20800E22D0D /* Bit By BitTests */;
+		};
+		3A1C4BF52DBAE8FF006DC9B8 /* Exceptions for "Wellness" folder in "Bit By BitUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 3AF420FA2DB1B20800E22D0D /* Bit By BitUITests */;
+		};
 		3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Bit By Bit" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -54,6 +66,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3A55C8822DB449A400E165DD /* Exceptions for "Wellness" folder in "Bit By Bit" target */,
+				3A1C4BF42DBAE8FF006DC9B8 /* Exceptions for "Wellness" folder in "Bit By BitTests" target */,
+				3A1C4BF52DBAE8FF006DC9B8 /* Exceptions for "Wellness" folder in "Bit By BitUITests" target */,
 			);
 			path = Wellness;
 			sourceTree = "<group>";
@@ -107,7 +121,6 @@
 				3AF420F42DB1B20800E22D0D /* WellnessTests */,
 				3AF420FE2DB1B20800E22D0D /* WellnessUITests */,
 				3AF420E52DB1B20500E22D0D /* Products */,
-				3A84660F2DB9DF7300DE012C /* launch.storyboard */,
 			);
 			sourceTree = "<group>";
 		};
@@ -250,7 +263,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A8466102DB9DF7300DE012C /* launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +464,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AA.Wellness;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.AA.Bit-By-Bit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -483,7 +495,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AA.Wellness;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.AA.Bit-By-Bit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

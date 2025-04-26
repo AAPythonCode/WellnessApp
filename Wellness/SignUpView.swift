@@ -19,10 +19,10 @@ struct SignUpView: View {
     var body: some View {
         VStack {
             Text("Bit By Bit")
-                .font(Font.custom("Gill Sans Light", size: 50))
+                .font(Font.custom("GmarketSansLight", size: 50))
                 .multilineTextAlignment(.center)
                 .bold()
-                .foregroundStyle(.white)
+                .foregroundStyle(.black)
                 .padding()
                 .offset(y: -30)
             Text("Join a community for coders all around the world!")
@@ -30,9 +30,9 @@ struct SignUpView: View {
                 .fontWeight(.black)
                 .multilineTextAlignment(.center)
                 .bold()
-                .foregroundColor(.white)
+                .foregroundStyle(.black)
                 .font(Font.custom(
-                    "Gill Sans", size: 27
+                    "GmarketSansLight", size: 27
                 ))
                 .bold()
             
@@ -46,9 +46,9 @@ struct SignUpView: View {
                 .scaledToFill()
             Text("Sign Up")
                 .font(Font.custom(
-                    "Gill Sans Light", size: 27
+                    "GmarketSansLight", size: 27
                 ))
-                .foregroundStyle(.white)
+                .foregroundStyle(.black)
             
             TextField("Enter email", text: $email)
                 .multilineTextAlignment(.center)
@@ -56,7 +56,7 @@ struct SignUpView: View {
                 .frame(width: 380)
                 .textFieldStyle(.roundedBorder)
                 .font(Font.custom(
-                    "Gill Sans Light", size: 27
+                    "GmarketSansLight", size: 27
                 ))
             SecureField("Enter password", text: $password)
                 .multilineTextAlignment(.center)
@@ -64,7 +64,7 @@ struct SignUpView: View {
                 .frame(width: 380)
                 .textFieldStyle(.roundedBorder)
                 .font(Font.custom(
-                    "Gill Sans Light", size: 27
+                    "GmarketSansLight", size: 27
                 ))
             
             SecureField("Re-enter password", text: $reenter)
@@ -73,7 +73,7 @@ struct SignUpView: View {
                 .frame(width: 380)
                 .textFieldStyle(.roundedBorder)
                 .font(Font.custom(
-                    "Gill Sans Light", size: 27
+                    "GmarketSansLight", size: 27
                 ))
             
             validationMessage()
@@ -82,7 +82,7 @@ struct SignUpView: View {
                 Label("Sign Up", systemImage: "arrow.up")
             }
             .padding()
-            .foregroundStyle(.white)
+            .foregroundStyle(.black)
             .background(isFormValid ? Color.black : Color.gray)
             .cornerRadius(32)
             .disabled(!isFormValid)
@@ -93,16 +93,15 @@ struct SignUpView: View {
             .shadow(radius: 32)
             if !signUpErrorMessage.isEmpty {
                 Text(signUpErrorMessage)
-                    .font(Font.custom("Gill Sans Light", size: 20))
-                    .foregroundStyle(.white)
+                    .font(Font.custom("GmarketSansLight", size: 20))
+                    .foregroundStyle(.black)
             }
             Button(action: logInBack) {
-                Text("return to login")
-                    .font(Font.custom("Gill Sans Light", size: 27))
+                Label("", systemImage: "arrow.backward")
+                    .font(Font.custom("GmarketSansLight", size: 27))
             }
-            .foregroundStyle(.white)
-            .offset(y: 80)
-            .offset(x: 0)
+            .foregroundStyle(.black)
+            .offset(x: -170, y: -610)
 
         }
         .padding()
@@ -118,20 +117,20 @@ struct SignUpView: View {
     func validationMessage() -> some View {
         if password.count < 1 {
             Text("Please enter a password.")
-                .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.white)
+                .font(Font.custom("GmarketSansLight", size: 20))
+                .foregroundStyle(.black)
         } else if password.count <= 3 {
             Text("Password should be more than 6 characters.")
-                .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.white)
+                .font(Font.custom("GmarketSansLight", size: 20))
+                .foregroundStyle(.black)
         } else if password.count > 20 {
             Text("Password should be less than 20 characters.")
-                .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.white)
+                .font(Font.custom("GmarketSansLight", size: 20))
+                .foregroundStyle(.black)
         } else if reenter != password {
             Text("Passwords do not match.")
-                .font(Font.custom("Gill Sans Light", size: 20))
-                .foregroundStyle(.white)
+                .font(Font.custom("GmarketSansLight", size: 20))
+                .foregroundStyle(.black)
         }
         
     }
@@ -151,8 +150,8 @@ struct SignUpView: View {
                 self.logIn.toggle()
             }
         }
-        #Preview {
-            SignUpView(email: "", password: "", reenter: "", logIn: .constant(false))
-        }
     }
+}
+#Preview {
+    SignUpView(email: "", password: "", reenter: "", logIn: .constant(false))
 }
