@@ -148,9 +148,8 @@ struct JoinScreen: View {
                 
             }
         }
-        #Preview {
-            JoinScreen()
-        }
-        
     }
+}
+#Preview {
+    JoinScreen()
 }

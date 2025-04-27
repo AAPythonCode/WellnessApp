@@ -119,7 +119,7 @@ struct SignUpView: View {
             Text("Please enter a password.")
                 .font(Font.custom("GmarketSansLight", size: 20))
                 .foregroundStyle(.black)
-        } else if password.count <= 3 {
+        } else if password.count < 6 {
             Text("Password should be more than 6 characters.")
                 .font(Font.custom("GmarketSansLight", size: 20))
                 .foregroundStyle(.black)

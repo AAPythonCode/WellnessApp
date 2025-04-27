@@ -7,22 +7,17 @@
 
 import SwiftUI
 
+var heartsRemaining = 5
+
 struct Dashboard: View {
     @Binding var isLoggedIn: Bool
-
+    @State var progress = 0
     var body: some View {
-        HStack {
-            Button("Logout") {
-                isLoggedIn = false
-            }
+        VStack {
+            Button ()
         }
-        .padding()
     }
 }
-
 #Preview {
     Dashboard(isLoggedIn: .constant(false))
-}
-func LogIn() {
-    
 }
