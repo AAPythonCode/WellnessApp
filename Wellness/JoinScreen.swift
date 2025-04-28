@@ -8,6 +8,8 @@ struct JoinScreen: View {
     @State private var signUpOrNot = false
     @State private var signUpErrorMessage: String = ""
     @State private var isLoggedIn = false
+    @State var userName = ""
+    @State var userEmail = ""
     var body: some View {
         Image("AppIcon")
             .frame(maxWidth: .infinity)
@@ -76,7 +78,7 @@ struct JoinScreen: View {
         }
         .offset(x: -3, y: -105)
         .fullScreenCover(isPresented: $isLoggedIn) {
-            Dashboard(isLoggedIn: $isLoggedIn)
+            Dashboard(isLoggedIn: $isLoggedIn, userName: $userName, userEmail: $userEmail)
         }
     }
     func cool() {
@@ -114,6 +116,8 @@ struct JoinScreen: View {
                     print("Signed in with Google: \(authResult?.user.email ?? "unknown email")")
                     self.signUpOrNot = false
                     self.isLoggedIn = true
+                    userName = user.profile?.name ?? ""
+                    userEmail = user.profile?.email ?? ""
                     
                 }
             }
