@@ -97,7 +97,7 @@ struct ContentView: View {
         .padding()
         .background(.white)
         .fullScreenCover(isPresented: $isLoggedIn) {
-            Dashboard(isLoggedIn: .constant(false))
+            Dashboard(isLoggedIn: .constant(false), userName: .constant(""), userEmail: .constant(""))
         }
         .fullScreenCover(isPresented: $goBackToJoinScreen) {
             JoinScreen()

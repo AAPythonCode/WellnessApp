@@ -21,7 +21,7 @@ struct Dashboard: View {
         } else if screenNum == 1 {
             communityScreen()
         } else if screenNum == 2 {
-            upgradeScreen()
+            upgradeScreen(chosenColor: .navyBlue)
         } else if screenNum == 3 {
             competitionsScreen()
         } else if screenNum == 4 {
@@ -33,12 +33,10 @@ struct Dashboard: View {
                 screenNum = 0
             }) {
                 VStack {
-                    Image(systemName: screenNum == 0 ? "house.fill" : "house")
+                    Image(screenNum == 0 ? "home-filled" : "home-unfilled")
                         .resizable()
                         .scaledToFit()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(screenNum == 0 ? .green : .gray)
-                        .frame(width: 30, height: 30)
+                        .frame(width: screenNum == 0 ? 40 : 30, height: screenNum == 0 ? 40 : 30)
                 }
                 .padding()
             }
@@ -46,12 +44,10 @@ struct Dashboard: View {
                 screenNum = 1
             }) {
                 VStack {
-                    Image(systemName: screenNum == 1 ? "person.3.fill" : "person.3")
+                    Image(screenNum == 1 ? "group-unfilled" : "group-filled")
                         .resizable()
                         .scaledToFit()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(screenNum == 1 ? .orange : .gray)
-                        .frame(width: 40, height: 40)
+                        .frame(width: screenNum == 1 ? 40 : 30, height: screenNum == 1 ? 40 : 30)
                 }
                 .padding()
             }
@@ -59,12 +55,10 @@ struct Dashboard: View {
                 screenNum = 2
             }) {
                 VStack {
-                    Image(systemName: screenNum == 2 ? "star.hexagon.fill" : "star.hexagon")
+                    Image(screenNum == 2 ? "certification-filled" : "certification-unfilled")
                         .resizable()
                         .scaledToFit()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(screenNum == 2 ? .gold : .gray)
-                        .frame(width: 30, height: 30)
+                        .frame(width: screenNum == 2 ? 40 : 30, height: screenNum == 2 ? 40 : 30)
                 }
                 .padding()
             }
@@ -72,25 +66,22 @@ struct Dashboard: View {
                 screenNum = 3
             }) {
                 VStack {
-                    Image(systemName: screenNum == 3 ? "trophy.fill" : "trophy")
+                    Image(screenNum == 3 ? "trophy-filled" : "trophy-unfilled")
                         .resizable()
                         .scaledToFit()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(screenNum == 3 ? .blue : .gray)
-                        .frame(width: 30, height: 30)
+                        .frame(width: screenNum == 3 ? 40 : 30, height: screenNum == 3 ? 40 : 30)
                 }
                 .padding()
             }
+            
             Button(action: {
                 screenNum = 4
             }) {
                 VStack {
-                    Image(systemName: screenNum == 4 ? "person.fill" : "person")
+                    Image(screenNum == 4 ? "user-filled" : "user-unfilled")
                         .resizable()
                         .scaledToFit()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(screenNum == 4 ? .purple : .gray)
-                        .frame(width: 30, height: 30)
+                        .frame(width: screenNum == 4 ? 40 : 30, height: screenNum == 4 ? 40 : 30)
                 }
                 .padding()
             }
@@ -98,18 +89,10 @@ struct Dashboard: View {
     }
 }
 
-struct homeScreen: View {
+
+struct profileScreen: View {
     var body: some View {
-        Spacer()
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .frame(height: 120)
-                .foregroundStyle(.blue)
-                .padding()
-            Text("Hello!")
-                .font(.custom("GmarketSansLight", size: 20))
-                .foregroundStyle(.white)
-        }
+
     }
 }
 struct communityScreen: View {
@@ -119,9 +102,189 @@ struct communityScreen: View {
     }
 }
 struct upgradeScreen: View {
+    @State var colors: [Color] = [.red, .orange, .green, .blue, .purple, .indigo, .navyBlue]
+    @State var counter: Int = 0
+    @State var chosenColor: Color
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     var body: some View {
-        Spacer()
-        Text("upgradeScreen!")
+        ScrollView {
+            Spacer()
+            VStack(spacing: 10) {
+                ZStack {
+                    roundRect(height: 680, color: .gold)
+                    VStack {
+                        Text("Bit by Bit presents: ")
+                        .multilineTextAlignment(.center)
+                        .font(.custom("GmarketSansBold", size: 20))
+                        .padding(20.0)
+                        .foregroundStyle(chosenColor)
+                        HStack {
+                            Text("""
+                         The
+                         Compile
+                         Club®
+                         """)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansBold", size: 40))
+                            .foregroundStyle(chosenColor)
+                        Image(systemName: "lightbulb.max.fill")
+                            .resizable()
+                            .foregroundStyle(chosenColor)
+                            .scaledToFit()
+                            .frame(width: 130, height: 130)
+                        }
+                    
+                        Label {
+                            Text("Scroll down to learn more!")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("GmarketSansLight", size: 30))
+                                .foregroundStyle(chosenColor)
+                            } icon : {
+                            Image(systemName: "arrowshape.down.circle.fill")
+                                .font(.system(size: 65))
+                                .foregroundStyle(chosenColor)
+                                .offset(y: 15)
+                        }
+                    }
+                }
+                ZStack {
+                    roundRect(height: 120, color: .gold)
+                    HStack(spacing: 0) {
+                        Text("""
+                             Join      
+                             the      
+                             """)
+                            .font(.custom("GmarketSansLight", size: 20))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(chosenColor)
+                        Text("Compile Club")
+                            .font(.custom("GmarketSansBold", size: 23))
+                            .foregroundStyle(chosenColor)
+                        Text("""
+                            for      
+                            advanced      
+                            coding!      
+                            """)
+                            .font(.custom("GmarketSansLight", size: 20))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(chosenColor)
+                    }
+                }
+                ZStack {
+                    roundRect(height: 120, color: .green)
+                    Text("Features:")
+                        .multilineTextAlignment(.center)
+                        .font(.custom("GmarketSansBold", size: 40))
+                        .foregroundStyle(.navyBlue)
+                }
+                ZStack {
+                    roundRect(height: 300, color: .green)
+                    VStack {
+                        Text("Competitions")
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansBold", size: 40))
+                            .foregroundStyle(.navyBlue)
+                            .padding(.bottom, 20)
+                            .offset(y: -10)
+                            Text("Compete against others! New challenges every Saturday.")
+                                .padding(.horizontal)
+                                .multilineTextAlignment(.center)
+                                .font(.custom("GmarketSansLight", size: 25))
+                                .foregroundStyle(.navyBlue)
+                        VStack {
+                            HStack(spacing: 0) {
+                                bottomText(content: "(Find me in the ", size: 25)
+                                Image("trophy-filled")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                            bottomText(content: "section of the app!)", size: 25)
+                        }
+                    }
+                }
+                ZStack {
+                    roundRect(height: 300, color: .green)
+                    VStack {
+                        topText(content: "Pro Practice", size: 40)
+                            .offset(y: -40)
+                        bottomText(content: "Practice and improve with Pro levels! ", size: 25)
+                            .offset(y: -35)
+                        HStack{
+                            bottomText(content: "(Once you upgrade, you'll find me in the", size: 20)
+                            Image("certification-filled")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                            bottomText(content: "section of the app!)", size: 20)
+                        }
+                    }
+                }
+                ZStack {
+                    roundRect(height: 300, color: .green)
+                    topText(content: "Fix Mistakes", size: 40)
+                        .offset(y: -90)
+                    bottomText(content: "Fix your mistakes by practicing them over and over! ", size: 25)
+                        .offset(y: -20)
+                    HStack{
+                        bottomText(content: "(Once you upgrade, you'll find me in the", size: 20)
+                            .offset(y: 70)
+                        Image("certification-filled")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                            .offset(y: 70)
+                        bottomText(content: "section of the app!)", size: 20)
+                            .offset(y: 70)
+                    }
+                }
+                ZStack{
+                    roundRect(height: 220, color: .gold)
+                    topText(content: "We saved the best one for last!",
+                            size: 45)
+                        .offset(y: 25.0)
+                }
+                ZStack {
+                    roundRect(height: 400, color: .purple)
+                    VStack {
+                        Text("Computer Link")
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansBold", size: 40))
+                            .foregroundStyle(.white)
+                            .offset(y: -50)
+                        Text("""
+                            Connect your phone to a comuter with an access code! 
+                            (Some optional typing lessons are in Pro levels)
+                            """)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansLight", size: 20))
+                            .foregroundStyle(.white)
+                            .padding()
+                        HStack{
+                            Text("(Once you upgrade, you'll find me in the")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("GmarketSansLight", size: 20))
+                                .foregroundStyle(.white)
+                                
+                            Image("certification-filled")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                
+                            Text("section of the app!)")
+                                .multilineTextAlignment(.center)
+                                .font(.custom("GmarketSansLight", size: 20))
+                                .foregroundStyle(.white)
+                                
+                        }
+                    }
+                }
+            }
+        }
+        .onReceive(timer) { _ in
+            counter += 1
+            if counter % 2 != 0 {
+                chosenColor = colors.randomElement() ?? .red
+            }
+        }
     }
 }
 struct competitionsScreen: View {
@@ -130,11 +293,55 @@ struct competitionsScreen: View {
         Text("competitionsScreen!")
     }
 }
-struct profileScreen: View {
+struct homeScreen: View {
     var body: some View {
-        
+        roundRect(height: 100, color: .blue)
+    }
+}
+
+//Convienience Structs
+// ______________________________________________________________________________________________________
+struct roundRect: View {
+    var height: CGFloat
+    var color: Color
+    var body: some View {
+        RoundedRectangle(cornerRadius: 20)
+            .frame(height: height)
+            .foregroundStyle(color)
+            .padding(.horizontal, 10)
+    }
+}
+struct coderCoding: View {
+    var body: some View {
+        Image("coder")
+            .resizable()
+            .frame(width: 70, height: 70)
+            .offset(y: 30)
+    }
+}
+struct topText: View {
+    var content: String
+    var size: CGFloat
+
+    var body: some View {
+        Text(content)
+            .multilineTextAlignment(.center)
+            .font(.custom("GmarketSansBold", size: size))
+            .foregroundStyle(.navyBlue)
+            .padding(.bottom, 20)
+            .offset(y: -10)
+    }
+}
+struct bottomText: View {
+    var content: String
+    var size: CGFloat
+    var body: some View {
+        Text(content)
+            .multilineTextAlignment(.center)
+            .font(.custom("GmarketSansLight", size: size))
+            .foregroundStyle(.navyBlue)
     }
 }
 #Preview {
-    Dashboard(isLoggedIn: .constant(false), userName: .constant("Sample User"), userEmail: .constant("sample@email.com"))
+    Dashboard(isLoggedIn: .constant(false), userName: .constant(""), userEmail: .constant(""))
 }
