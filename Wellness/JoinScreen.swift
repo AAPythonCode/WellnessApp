@@ -5,82 +5,93 @@ import FirebaseCore
 import GoogleSignIn
 
 struct JoinScreen: View {
-    @State private var signUpOrNot = false
+    @State private var isSignUpPresented = false
     @State private var signUpErrorMessage: String = ""
     @State private var isLoggedIn = false
     @State var userName = ""
     @State var userEmail = ""
+    @State var isLogInPresented = false
+    @Binding var emailCertified: String
     var body: some View {
-        Image("AppIcon")
-            .frame(maxWidth: .infinity)
-            .padding()
-            .scaledToFit()
-        Image("appe")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 200, height: 200)
-            .offset(y: -110)
-        Text("The world's best way to learn a coding language, bit by bit.")
-            .multilineTextAlignment(.center)
-            .font(.custom("GmarketSansLight", size: 20))
-        Button {
-            signUpOrNot = true
-        } label: {
-            Text("  Sign Up With Email              ")
-        }
-        .foregroundStyle(.white)
-        .font(.custom("GmarketSansLight", size: 20))
-        .buttonStyle(.borderedProminent)
-        .offset(y: 200)
-        .fullScreenCover(isPresented: $signUpOrNot) {
-            SignUpView(email: "", password: "", reenter: "", logIn: $signUpOrNot)
-        }
-        
-        Button {
-            
-        } label: {
-            Text("Log In With Email                    ")
-        }
-        .foregroundStyle(.black)
-        .font(.custom("GmarketSansLight", size: 20))
-        .offset(y: 210)
-        .buttonStyle(.bordered)
-        
-        Text("──────── or ────────")
-            .foregroundStyle(.black)
-            .font(Font.custom("GmarketSansLight", size: 20))
-            .multilineTextAlignment(.center)
-            .bold()
+        VStack {
+            Image("AppIcon")
+                .frame(maxWidth: .infinity)
+                .padding()
+                .scaledToFit()
+            Image("appe")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 200, height: 200)
+                .offset(y: -110)
+            Text("The world's best way to learn a coding language, bit by bit.")
+                .multilineTextAlignment(.center)
+                .font(.custom("GmarketSansLight", size: 20))
+            Button {
+                isSignUpPresented = true
+            } label: {
+                Text("  Sign Up With Email              ")
+            }
             .foregroundStyle(.white)
-            .offset(y: 80)
-        Button(action: signInWithGoogle) {
-            Label {
-                Text("Sign in with Google")
-                    .foregroundStyle(.black)
-                    .font(Font.custom("GmarketSansLight", size: 20))
-            } icon: {
-                Image("Google")
-                    .resizable()
-                    .frame(width: 50, height: 50)
+            .font(.custom("GmarketSansLight", size: 20))
+            .buttonStyle(.borderedProminent)
+            .offset(y: 200)
+            .fullScreenCover(isPresented: $isSignUpPresented) {
+                SignUpView(email: "", password: "", reenter: "", emailCertified: "", logIn: $isSignUpPresented)
             }
-        }
-        Button(action: cool) {
-            Label {
-                Text("Sign in with Github")
-                    .foregroundStyle(.black)
-                    .font(Font.custom("GmarketSansLight", size: 20))
-            } icon: {
-                Image("GitHub")
-                    .resizable()
-                    .renderingMode(.original)
-                    .frame(width: 40, height: 40)
+
+            Button {
+                isLogInPresented = true
+            } label: {
+                Text("Log In With Email                    ")
             }
+            .foregroundStyle(.black)
+            .font(.custom("GmarketSansLight", size: 20))
+            .offset(y: 210)
+            .buttonStyle(.bordered)
+
+            Text("──────── or ────────")
+                .foregroundStyle(.black)
+                .font(Font.custom("GmarketSansLight", size: 20))
+                .multilineTextAlignment(.center)
+                .bold()
+                .foregroundStyle(.white)
+                .offset(y: 80)
+                .fullScreenCover(isPresented: $isLogInPresented) {
+                    ContentView(isLogInPresented: $isLogInPresented, emailCertifiedDash: "")
+                }
+
+            Button(action: signInWithGoogle) {
+                Label {
+                    Text("Sign in with Google")
+                        .foregroundStyle(.black)
+                        .font(Font.custom("GmarketSansLight", size: 20))
+                } icon: {
+                    Image("Google")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                }
+            }
+
+            Button(action: cool) {
+                Label {
+                    Text("Sign in with Github")
+                        .foregroundStyle(.black)
+                        .font(Font.custom("GmarketSansLight", size: 20))
+                } icon: {
+                    Image("GitHub")
+                        .resizable()
+                        .renderingMode(.original)
+                        .frame(width: 40, height: 40)
+                }
+            }
+            .offset(x: -3, y: -105)
         }
-        .offset(x: -3, y: -105)
         .fullScreenCover(isPresented: $isLoggedIn) {
-            Dashboard(isLoggedIn: $isLoggedIn, userName: $userName, userEmail: $userEmail)
+            Dashboard(emailCertified: emailCertified, isLoggedIn: $isLoggedIn, progress: 0, screenNum: 0)
         }
     }
+    
+
     func cool() {
         
     }
@@ -114,11 +125,16 @@ struct JoinScreen: View {
                     self.signUpErrorMessage = "\(error.localizedDescription)"
                 } else {
                     print("Signed in with Google: \(authResult?.user.email ?? "unknown email")")
-                    self.signUpOrNot = false
-                    self.isLoggedIn = true
-                    userName = user.profile?.name ?? ""
-                    userEmail = user.profile?.email ?? ""
-                    
+                    self.userName = user.profile?.name ?? ""
+                    self.userEmail = user.profile?.email ?? ""
+                    if let email = user.profile?.email, !email.isEmpty {
+                        self.emailCertified = email
+                        self.isSignUpPresented = false
+                        self.isLoggedIn = true
+                    } else {
+                        self.signUpErrorMessage = "Email is empty; cannot proceed."
+                        print("Error: Email is empty, skipping login flow to avoid Firestore crash.")
+                    }
                 }
             }
             
@@ -155,5 +171,5 @@ struct JoinScreen: View {
     }
 }
 #Preview {
-    JoinScreen()
+    JoinScreen(emailCertified: .constant(""))
 }

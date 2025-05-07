@@ -6,18 +6,22 @@
 //
 
 import SwiftUI
-
+import FirebaseCore
+import FirebaseFirestore
 var heartsRemaining = 5
 
 struct Dashboard: View {
+    @State var emailCertified: String
     @Binding var isLoggedIn: Bool
-    @Binding var userName: String
-    @Binding var userEmail: String
     @State var progress = 0
     @State var screenNum: Int = 0
+
     var body: some View {
         if screenNum == 0 {
-            homeScreen()
+            homeScreen(emailCertified: $emailCertified)
+                .onAppear {
+                    print("emailCertified: \(emailCertified)")
+                }
         } else if screenNum == 1 {
             communityScreen()
         } else if screenNum == 2 {
@@ -89,18 +93,53 @@ struct Dashboard: View {
     }
 }
 
-
-struct profileScreen: View {
+//______________________________________________________________________________________________________
+struct homeScreen: View {
+    @Binding var emailCertified: String
+    @State private var fetchedEmail: String = "Loading..."
+    
     var body: some View {
-
+        VStack {
+            Text("Home Screen")
+            Text("Email from DB: \(fetchedEmail)")
+        }
+        .onAppear {
+            Task {
+                do {
+                    let db = Firestore.firestore()
+                    guard !emailCertified.isEmpty else {
+                        print("Error: emailCertified is empty, skipping Firestore call.")
+                        return
+                    }
+                    let docRef = db.collection("users").document(emailCertified)
+                    let documentSnapshot = try await docRef.getDocument()
+                    
+                    if let data = documentSnapshot.data() {
+                        let fetchedEmail = data["email"] as? String ?? "Unknown email"
+                        self.fetchedEmail = fetchedEmail
+                        print("Fetched email from Firestore: \(fetchedEmail)")
+                    } else {
+                        print("Document does not exist for \(emailCertified)")
+                        self.fetchedEmail = "Not found"
+                    }
+                } catch {
+                    print("Error: \(error)")
+                    self.fetchedEmail = "Error"
+                }
+            }
+        }
     }
+    
 }
+//______________________________________________________________________________________________________
 struct communityScreen: View {
     var body: some View {
         Spacer()
         Text("communityScreen!")
     }
 }
+
+//______________________________________________________________________________________________________
 struct upgradeScreen: View {
     @State var colors: [Color] = [.red, .orange, .green, .blue, .purple, .indigo, .navyBlue]
     @State var counter: Int = 0
@@ -114,32 +153,32 @@ struct upgradeScreen: View {
                     roundRect(height: 680, color: .gold)
                     VStack {
                         Text("Bit by Bit presents: ")
-                        .multilineTextAlignment(.center)
-                        .font(.custom("GmarketSansBold", size: 20))
-                        .padding(20.0)
-                        .foregroundStyle(chosenColor)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansBold", size: 20))
+                            .padding(20.0)
+                            .foregroundStyle(chosenColor)
                         HStack {
                             Text("""
                          The
                          Compile
                          Club®
                          """)
-                            .multilineTextAlignment(.center)
-                            .font(.custom("GmarketSansBold", size: 40))
-                            .foregroundStyle(chosenColor)
-                        Image(systemName: "lightbulb.max.fill")
-                            .resizable()
-                            .foregroundStyle(chosenColor)
-                            .scaledToFit()
-                            .frame(width: 130, height: 130)
+                                .multilineTextAlignment(.center)
+                                .font(.custom("GmarketSansBold", size: 40))
+                                .foregroundStyle(chosenColor)
+                            Image(systemName: "lightbulb.max.fill")
+                                .resizable()
+                                .foregroundStyle(chosenColor)
+                                .scaledToFit()
+                                .frame(width: 130, height: 130)
                         }
-                    
+                        
                         Label {
                             Text("Scroll down to learn more!")
                                 .multilineTextAlignment(.center)
                                 .font(.custom("GmarketSansLight", size: 30))
                                 .foregroundStyle(chosenColor)
-                            } icon : {
+                        } icon : {
                             Image(systemName: "arrowshape.down.circle.fill")
                                 .font(.system(size: 65))
                                 .foregroundStyle(chosenColor)
@@ -154,9 +193,9 @@ struct upgradeScreen: View {
                              Join      
                              the      
                              """)
-                            .font(.custom("GmarketSansLight", size: 20))
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(chosenColor)
+                        .font(.custom("GmarketSansLight", size: 20))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(chosenColor)
                         Text("Compile Club")
                             .font(.custom("GmarketSansBold", size: 23))
                             .foregroundStyle(chosenColor)
@@ -165,9 +204,9 @@ struct upgradeScreen: View {
                             advanced      
                             coding!      
                             """)
-                            .font(.custom("GmarketSansLight", size: 20))
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(chosenColor)
+                        .font(.custom("GmarketSansLight", size: 20))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(chosenColor)
                     }
                 }
                 ZStack {
@@ -186,11 +225,11 @@ struct upgradeScreen: View {
                             .foregroundStyle(.navyBlue)
                             .padding(.bottom, 20)
                             .offset(y: -10)
-                            Text("Compete against others! New challenges every Saturday.")
-                                .padding(.horizontal)
-                                .multilineTextAlignment(.center)
-                                .font(.custom("GmarketSansLight", size: 25))
-                                .foregroundStyle(.navyBlue)
+                        Text("Compete against others! New challenges every Saturday.")
+                            .padding(.horizontal)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("GmarketSansLight", size: 25))
+                            .foregroundStyle(.navyBlue)
                         VStack {
                             HStack(spacing: 0) {
                                 bottomText(content: "(Find me in the ", size: 25)
@@ -240,7 +279,7 @@ struct upgradeScreen: View {
                     roundRect(height: 220, color: .gold)
                     topText(content: "We saved the best one for last!",
                             size: 45)
-                        .offset(y: 25.0)
+                    .offset(y: 25.0)
                 }
                 ZStack {
                     roundRect(height: 400, color: .purple)
@@ -254,26 +293,26 @@ struct upgradeScreen: View {
                             Connect your phone to a comuter with an access code! 
                             (Some optional typing lessons are in Pro levels)
                             """)
-                            .multilineTextAlignment(.center)
-                            .font(.custom("GmarketSansLight", size: 20))
-                            .foregroundStyle(.white)
-                            .padding()
+                        .multilineTextAlignment(.center)
+                        .font(.custom("GmarketSansLight", size: 20))
+                        .foregroundStyle(.white)
+                        .padding()
                         HStack{
                             Text("(Once you upgrade, you'll find me in the")
                                 .multilineTextAlignment(.center)
                                 .font(.custom("GmarketSansLight", size: 20))
                                 .foregroundStyle(.white)
-                                
+                            
                             Image("certification-filled")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                
+                            
                             Text("section of the app!)")
                                 .multilineTextAlignment(.center)
                                 .font(.custom("GmarketSansLight", size: 20))
                                 .foregroundStyle(.white)
-                                
+                            
                         }
                     }
                 }
@@ -287,61 +326,72 @@ struct upgradeScreen: View {
         }
     }
 }
+    //______________________________________________________________________________________________________
 struct competitionsScreen: View {
-    var body: some View {
-        Spacer()
-        Text("competitionsScreen!")
+        var body: some View {
+            Spacer()
+            Text("competitionsScreen!")
     }
 }
-struct homeScreen: View {
-    var body: some View {
-        roundRect(height: 100, color: .blue)
-    }
+    
+    //______________________________________________________________________________________________________
+    struct profileScreen: View {
+        
+        var body: some View {
+            
+        }
 }
-
-//Convienience Structs
-// ______________________________________________________________________________________________________
-struct roundRect: View {
-    var height: CGFloat
-    var color: Color
-    var body: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .frame(height: height)
-            .foregroundStyle(color)
-            .padding(.horizontal, 10)
-    }
+    
+    //Convienience Structs
+    // _____________________________________________________________________________________________________
+    struct roundRect: View {
+        var height: CGFloat
+        var color: Color
+        var body: some View {
+            RoundedRectangle(cornerRadius: 20)
+                .frame(height: height)
+                .foregroundStyle(color)
+                .padding(.horizontal, 10)
+        }
 }
-struct coderCoding: View {
-    var body: some View {
-        Image("coder")
-            .resizable()
-            .frame(width: 70, height: 70)
-            .offset(y: 30)
-    }
+    struct coderCoding: View {
+        var body: some View {
+            Image("coder")
+                .resizable()
+                .frame(width: 70, height: 70)
+                .offset(y: 30)
+        }
 }
 struct topText: View {
-    var content: String
-    var size: CGFloat
-
-    var body: some View {
-        Text(content)
-            .multilineTextAlignment(.center)
-            .font(.custom("GmarketSansBold", size: size))
-            .foregroundStyle(.navyBlue)
-            .padding(.bottom, 20)
-            .offset(y: -10)
-    }
+        var content: String
+        var size: CGFloat
+        
+        var body: some View {
+            Text(content)
+                .multilineTextAlignment(.center)
+                .font(.custom("GmarketSansBold", size: size))
+                .foregroundStyle(.navyBlue)
+                .padding(.bottom, 20)
+                .offset(y: -10)
+        }
 }
-struct bottomText: View {
-    var content: String
-    var size: CGFloat
-    var body: some View {
-        Text(content)
-            .multilineTextAlignment(.center)
-            .font(.custom("GmarketSansLight", size: size))
-            .foregroundStyle(.navyBlue)
-    }
+    struct bottomText: View {
+        var content: String
+        var size: CGFloat
+        var body: some View {
+            Text(content)
+                .multilineTextAlignment(.center)
+                .font(.custom("GmarketSansLight", size: size))
+                .foregroundStyle(.navyBlue)
+        }
+}
+
+struct codableUser: Codable {
+    var email: String
+    var createdAt: String
+    var firstName: String
+    var lastName: String
 }
 #Preview {
-    Dashboard(isLoggedIn: .constant(false), userName: .constant(""), userEmail: .constant(""))
+    Dashboard(emailCertified: "", isLoggedIn: .constant(false))
 }

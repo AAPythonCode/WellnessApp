@@ -2,36 +2,37 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
+import FirebaseFirestore
 
 struct ContentView: View {
-    @State var email: String
-    @State var password: String
+    @State private var userEmail: String = ""
+    @State private var userPassword: String = ""
     @State private var signUpErrorMessage: String = ""
-    @State private var showingResetAlert = false
-    @State private var resetEmail: String = ""
-    @State private var isLoggedIn: Bool = false
-    @State private var loginError: String = ""
-    @State private var githubSignInError: String = ""
-    @State private var goBackToJoinScreen = false
-    
+    @State private var isResetPasswordAlertVisible: Bool = false
+    @State private var resetEmailAddress: String = ""
+    @State private var isUserLoggedIn: Bool = false
+    @State private var loginErrorMessage: String = ""
+    @State private var githubSignInErrorMessage: String = ""
+    @State private var shouldReturnToJoinScreen: Bool = false
+    @Binding var isLogInPresented: Bool
+    @State var emailCertifiedDash: String
+
     var body: some View {
         VStack {
-            
-            Text("Welcome back to your coding journey.")
+            Text("Welcome back to your coding journey!")
                 .font(Font.custom("GmarketSansLight", size: 35))
-            
                 .multilineTextAlignment(.center)
                 .bold()
                 .foregroundStyle(.black)
                 .padding()
-            
+
             Text("Log in with email")
                 .font(Font.custom("GmarketSansLight", size: 23))
                 .bold()
                 .foregroundStyle(.black)
                 .padding()
-            
-            TextField("Enter email", text: $email)
+
+            TextField("Enter email", text: $userEmail)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .frame(width: 380)
@@ -39,102 +40,121 @@ struct ContentView: View {
                 .font(Font.custom("GmarketSansLight", size: 27))
                 .padding(.bottom, 5)
                 .padding()
-            
-            TextField("Enter password", text: $password)
+
+            TextField("Enter password", text: $userPassword)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .frame(width: 380)
                 .textFieldStyle(.roundedBorder)
                 .font(Font.custom("GmarketSansLight", size: 27))
                 .padding(.bottom, 5)
-            
+
             Button(action: signIn) {
                 Label("Log In", systemImage: "arrow.up")
             }
             .padding()
-            .foregroundStyle(.black)
-            .background(.blue)
+            .foregroundStyle(.white)
+            .background(.black)
             .cornerRadius(32)
-            
+
             Button("Forgot Password?") {
-                showingResetAlert = true
+                isResetPasswordAlertVisible = true
             }
             .foregroundStyle(.black)
             .padding()
-            .sheet(isPresented: $showingResetAlert) {
+            .sheet(isPresented: $isResetPasswordAlertVisible) {
                 VStack {
                     Text("Reset your password. ")
-                        .font(.title2)
+                        .font(Font.custom("GmarketSansLight", size: 35))
+                        .multilineTextAlignment(.center)
+                        .bold()
+                        .foregroundStyle(.black)
                         .padding()
+
                     Text("Don't worry, we all forget sometimes! 😅")
-                    TextField("Enter your email (it should be valid)", text: $resetEmail)
+                        .font(Font.custom("GmarketSansLight", size: 23))
+                        .multilineTextAlignment(.center)
+                        .bold()
+                        .foregroundStyle(.black)
+                        .padding()
+                    TextField("Enter your email (it should be valid)", text: $resetEmailAddress)
                         .textFieldStyle(.roundedBorder)
                         .padding()
+                        .font(Font.custom("GmarketSansLight", size: 15))
+
                     Button("Send Reset Email (Check Your Inbox)") {
                         resetPassword()
-                        showingResetAlert = false
+                        isResetPasswordAlertVisible = false
                     }
+                    .buttonStyle(.borderedProminent)
+                    .font(Font.custom("GmarketSansLight", size: 15))
+                    .bold()
+                    .foregroundStyle(.white)
+                    .padding()
+                    
+
                     Text("(Swipe down to close this menu.)")
+                        .multilineTextAlignment(.center)
                         .padding()
                         .tint(.gray)
+                        .font(Font.custom("GmarketSansLight", size: 15))
                 }
                 .padding()
             }
-            
-            
-            
+
             Button {
-                goBackToJoinScreen = true
+                isLogInPresented = false
             } label: {
                 Label("", systemImage: "arrow.backward")
             }
             .font(Font.custom("GmarketSansLight", size: 27))
             .foregroundStyle(.black)
             .padding()
-            .offset(x: -170, y: -610)
-            
+            .offset(x: -170, y: -571)
+
         }
         .padding()
         .background(.white)
-        .fullScreenCover(isPresented: $isLoggedIn) {
-            Dashboard(isLoggedIn: .constant(false), userName: .constant(""), userEmail: .constant(""))
+        .fullScreenCover(isPresented: $isUserLoggedIn) {
+            Dashboard(emailCertified: emailCertifiedDash, isLoggedIn: $isUserLoggedIn, progress: 0, screenNum: 0)
         }
-        .fullScreenCover(isPresented: $goBackToJoinScreen) {
-            JoinScreen()
-        }
-        .alert("GitHub Sign-In Error", isPresented: .constant(!githubSignInError.isEmpty)) {
+        .alert("GitHub Sign-In Error", isPresented: .constant(!githubSignInErrorMessage.isEmpty)) {
             Button("OK", role: .cancel) {
-                githubSignInError = ""
+                githubSignInErrorMessage = ""
             }
         } message: {
-            Text(githubSignInError)
+            Text(githubSignInErrorMessage)
         }
     }
-    
+
     func signIn() {
-        
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: userEmail, password: userPassword) { result, error in
             if let error = error {
                 print("Oopsie: \(error.localizedDescription)")
             } else {
                 print("Login successful")
-                isLoggedIn = true
+                if let user = result?.user {
+                    let fetchedEmail = user.email ?? ""
+                    print("Firebase returned email: \(fetchedEmail)")
+                    emailCertifiedDash = fetchedEmail
+                    isUserLoggedIn = true
+                    print("Updated emailCertified: \(emailCertifiedDash)")
+                }
             }
         }
     }
-    
 
     func resetPassword() {
-        Auth.auth().sendPasswordReset(withEmail: resetEmail) { error in
+        Auth.auth().sendPasswordReset(withEmail: resetEmailAddress) { error in
             if let error = error {
                 print("Password reset error: \(error.localizedDescription)")
             } else {
-                print("Password reset email sent to \(resetEmail)")
+                print("Password reset email sent to \(resetEmailAddress)")
             }
         }
     }
 }
 
 #Preview {
-    ContentView(email: "", password: "")
+    ContentView(isLogInPresented: .constant(false), emailCertifiedDash: "")
 }

@@ -2,13 +2,16 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
+import FirebaseFirestore
 
 struct SignUpView: View {
     @State var email: String
     @State var password: String
     @State var reenter: String
+    @State var emailCertified: String
     @State private var signUpErrorMessage: String = ""
     @Binding var logIn: Bool
+    @State private var showDashboard = false
     
     var isFormValid: Bool {
         return !email.isEmpty &&
@@ -17,25 +20,15 @@ struct SignUpView: View {
         password == reenter
     }
     var body: some View {
-        VStack {
-            Text("Bit By Bit")
-                .font(Font.custom("GmarketSansLight", size: 50))
+        
+        VStack(spacing: 20) {
+            Text("Start your coding journey, bit by bit!")
+                .font(Font.custom("GmarketSansLight", size: 35))
                 .multilineTextAlignment(.center)
                 .bold()
                 .foregroundStyle(.black)
                 .padding()
-                .offset(y: -30)
-            Text("Join a community for coders all around the world!")
-                .font(.title2)
-                .fontWeight(.black)
-                .multilineTextAlignment(.center)
-                .bold()
-                .foregroundStyle(.black)
-                .font(Font.custom(
-                    "GmarketSansLight", size: 27
-                ))
-                .bold()
-            
+
             Image(systemName: "")
                 .resizable()
                 .foregroundColor(.white)
@@ -82,15 +75,14 @@ struct SignUpView: View {
                 Label("Sign Up", systemImage: "arrow.up")
             }
             .padding()
-            .foregroundStyle(.black)
+            .font(Font.custom("GmarketSansLight", size: 15))
+            .foregroundStyle(.white)
             .background(isFormValid ? Color.black : Color.gray)
             .cornerRadius(32)
             .disabled(!isFormValid)
-            
-            
             .background(.white)
             .cornerRadius(32)
-            .shadow(radius: 32)
+
             if !signUpErrorMessage.isEmpty {
                 Text(signUpErrorMessage)
                     .font(Font.custom("GmarketSansLight", size: 20))
@@ -101,16 +93,14 @@ struct SignUpView: View {
                     .font(Font.custom("GmarketSansLight", size: 27))
             }
             .foregroundStyle(.black)
-            .offset(x: -170, y: -610)
+            .offset(x: -170, y: -670)
 
         }
         .padding()
-        .background(
-            Image("coder")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 2010, height: 950)
-        )
+        .background(.white)
+        .fullScreenCover(isPresented: $showDashboard) {
+            ContentView(isLogInPresented: .constant(false), emailCertifiedDash: "")
+        }
     }
     
     @ViewBuilder
@@ -144,14 +134,32 @@ struct SignUpView: View {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 signUpErrorMessage = "Sign Up Error: \(error.localizedDescription)"
-                
             } else {
+                let db = Firestore.firestore()
                 print("Account created for: \(result?.user.email ?? "unknown email")")
-                self.logIn.toggle()
+                guard let email = result?.user.email, !email.isEmpty else {
+                    print("Error: email is empty, skipping Firestore call.")
+                    return
+                }
+                self.emailCertified = email
+                print("email: \(self.emailCertified)")
+                db.collection("users").document(self.emailCertified).setData([
+                    "email": self.emailCertified,
+                    "createdAt": Timestamp(date: Date()),
+                    "firstName": "",
+                    "lastName": ""
+                ]) { error in
+                    if let error = error {
+                        print("Error writing document: \(error)")
+                    } else {
+                        print("Document successfully written!")
+                        self.showDashboard = true
+                    }
+                }
             }
         }
     }
 }
 #Preview {
-    SignUpView(email: "", password: "", reenter: "", logIn: .constant(false))
+    SignUpView(email: "", password: "", reenter: "", emailCertified: "", logIn: .constant(false))
 }

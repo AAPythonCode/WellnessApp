@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseFirestore
 import FirebaseAuth
 import GoogleSignIn
 import GoogleSignInSwift
@@ -36,7 +37,7 @@ struct WellnessApp: App {
                         }
                     }
             } else {
-                JoinScreen()
+                JoinScreen(emailCertified: .constant(""))
             }
         }
     }
