@@ -3,6 +3,8 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
+import AuthenticationServices
+import FirebaseUI
 
 struct JoinScreen: View {
     @State private var isSignUpPresented = false
@@ -12,6 +14,8 @@ struct JoinScreen: View {
     @State var userEmail = ""
     @State var isLogInPresented = false
     @Binding var emailCertified: String
+    @State var temporaryAccessCode: String
+    @State var githubAccessToken: String
     var body: some View {
         VStack {
             Image("AppIcon")
@@ -92,8 +96,14 @@ struct JoinScreen: View {
     }
     
 
-    func cool() {
-        
+    func startGitHubSignIn() {
+                let authUI = FUIAuth.defaultAuthUI()!
+                authUI.providers = [FUIGitHubAuth()]
+                
+                // Present the FirebaseUI sign-in screen
+                authUI.delegate = self as? FUIAuthDelegate
+                let authViewController = authUI.authViewController()
+                UIApplication.shared.windows.first?.rootViewController?.present(authViewController, animated: true, completion: nil)
     }
     func signInWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }

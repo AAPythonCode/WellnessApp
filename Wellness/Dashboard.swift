@@ -18,7 +18,7 @@ struct Dashboard: View {
 
     var body: some View {
         if screenNum == 0 {
-            homeScreen(emailCertified: $emailCertified)
+            homeScreen(offsetPracticeVariables: false, offsetBasics: false, boolbool: .constant(false))
                 .onAppear {
                     print("emailCertified: \(emailCertified)")
                 }
@@ -29,7 +29,7 @@ struct Dashboard: View {
         } else if screenNum == 3 {
             competitionsScreen()
         } else if screenNum == 4 {
-            profileScreen()
+            profileScreen(emailCertified: $emailCertified)
         }
         Spacer()
         HStack {
@@ -94,7 +94,7 @@ struct Dashboard: View {
 }
 
 //______________________________________________________________________________________________________
-struct homeScreen: View {
+struct profileScreen: View {
     @Binding var emailCertified: String
     @State private var fetchedEmail: String = "Loading..."
     
@@ -335,13 +335,75 @@ struct competitionsScreen: View {
 }
     
     //______________________________________________________________________________________________________
-    struct profileScreen: View {
-        
-        var body: some View {
-            
+struct homeScreen: View {
+    @State var offsetPracticeVariables: Bool
+    @State var offsetBasics: Bool
+    @Binding var boolbool: Bool
+    var body: some View {
+        VStack(spacing: 20) {
+            Button(action: {
+                print("Learn the Basics tapped")
+            }) {
+                ZStack {
+                    customButton(boolbool: $offsetBasics, darkerColor: .darkerGold, Color: .gold, height: 250) {
+                        print("hi")
+                    }
+                    VStack {
+                        Text("Learn the Basics!")
+                            .font(.custom("GmarketSansBold", size: 20))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.white)
+                            .padding()
+                            .offset(y: offsetBasics == true ? 10 : 0)
+                        Text("Learn syntax, along with 'var', 'let', and more!")
+                            .font(.custom("GmarketSansLight", size: 14))
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .foregroundStyle(.white)
+                            .offset(y: offsetBasics == true ? 10 : 0)
+                    }
+                    
+                }
+                .onAppear {
+                    offsetBasics = boolbool
+                    offsetPracticeVariables = boolbool
+                    print(offsetBasics)
+                }
+            }
+            ZStack {
+                customButton(boolbool: $offsetPracticeVariables, darkerColor: .darkerGreen, Color: .green, height: 250) {
+                    print("hi")
+                }
+                VStack {
+                    Text("Practice Variables!")
+                        .font(.custom("GmarketSansBold", size: 20))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.white)
+                        .padding()
+                        .offset(y: offsetPracticeVariables == true ? 10 : 0)
+                    Text("""
+                        Solidify your understanding of variables and 
+                        syntax with practice questions.
+                        """)
+                        .font(.custom("GmarketSansLight", size: 14))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.white)
+                        .padding()
+                        .offset(y: offsetPracticeVariables == true ? 10 : 0)
+                }
+            }
         }
+    }
 }
-    
+
+struct MiniLessonBasic: View {
+    let question: String
+    let choices: [String]
+    let correctAnswer: [String]
+    var body: some View {
+        
+    }
+}
     //Convienience Structs
     // _____________________________________________________________________________________________________
     struct roundRect: View {
@@ -384,6 +446,35 @@ struct topText: View {
                 .font(.custom("GmarketSansLight", size: size))
                 .foregroundStyle(.navyBlue)
         }
+}
+
+struct customButton: View {
+    @Binding var boolbool: Bool
+    var darkerColor: Color
+    var Color: Color
+    var height: CGFloat
+    var onReleaseFunc: () -> Void
+    var body: some View {
+        ZStack {
+            roundRect(height: height, color: darkerColor)
+                .offset(y: 10)
+            roundRect(height: height, color: Color )
+                .offset(y: boolbool == true ? 10 : 0)
+        }
+        .onLongPressGesture(minimumDuration: 0, pressing: { isPressing in
+            boolbool = isPressing
+            if isPressing {
+                print("pressing down")
+                let impactHeavy = UIImpactFeedbackGenerator(style: .medium)
+                impactHeavy.impactOccurred()
+            } else {
+                print("released")
+                let impactHeavy = UIImpactFeedbackGenerator(style: .medium)
+                impactHeavy.impactOccurred()
+                onReleaseFunc()
+            }
+        }, perform: {})
+    }
 }
 
 struct codableUser: Codable {
